@@ -38,10 +38,6 @@ public class GreenCartHomeTest extends FrameworkBase {
 		System.out.println("Starting test class");
 		log.info("Starting test class");
 		
-		ExtentSparkReporter extent=new ExtentSparkReporter(System.getProperty("user.dir") + "/reports/index.html");
-		
-		report = new ExtentReports();
-		report.attachReporter(extent);
 		
 	}
 	
@@ -49,7 +45,7 @@ public class GreenCartHomeTest extends FrameworkBase {
 	public void endTest()
 	{
 		System.out.println("Ending test class");
-		report.flush();
+		
 		
 	}
 
@@ -64,7 +60,6 @@ public class GreenCartHomeTest extends FrameworkBase {
 
 	@BeforeMethod
 	public void testCaseSetup() {
-		test = report.createTest("Test Case Setup");
 		
 		driver = initializeDriver();
 
@@ -77,39 +72,28 @@ public class GreenCartHomeTest extends FrameworkBase {
 	public void testMethodEnd() throws InterruptedException {
 
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		// TODO Take Screenshot
 		driver.close();
 		driver.quit();
 		log.info("Driver is Closed");
 		
-		reportTearDown();
-		report.flush();
 	}
 
 	@Test(enabled = true)
 	public void testMetaData() {
 		
-		test = report.createTest("Test site Meta Data");
 		String pageTitle = driver.getTitle();
 		System.out.println(pageTitle);
 		Assert.assertEquals(pageTitle, "GreenKart - veg and fruits kart1");
 		log.info("Meta data is validated");
-
-		test.log(Status.PASS, "Some good status");
-		test.log(Status.INFO, "Some insignificant test");
-		test.log(Status.SKIP, "Going to skip this test");
-		test.log(Status.FAIL, "Some very bad test");
 		
 	}
 	
 	@Test(enabled = true)
 	public void verifyPageLogo() {
-		test = report.createTest("Test Page Logo");
 		
 		System.out.println("Second test");
 		System.out.println(greenCartHomePage.verifyLogoText());
 		Assert.assertEquals(greenCartHomePage.verifyLogoExists(), true);
-		test.log(Status.PASS, "Logo is Verified");
 		
 	}
 

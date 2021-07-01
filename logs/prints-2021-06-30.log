@@ -1,7 +1,6 @@
-23:20:59.696 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
-23:21:00.404 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
-23:22:43.584 [main] INFO  testSuite.GreenCartHomeTest - Starting test class
-23:22:55.565 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
-23:29:34.220 [main] INFO  testSuite.GreenCartHomeTest - Starting test class
-23:29:44.567 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
-23:37:50.353 [main] INFO  testSuite.GreenCartHomeTest - Starting test class
+23:40:19.877 [main] INFO  testSuite.GreenCartHomeTest - Starting test class
+23:40:31.564 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
+23:40:32.338 [main] INFO  frameworkBase.FrameworkBase - /Users/santuroy/Documents/newWorkspace/EndToEndJavaSeleniumFramework/reports/screenshots/testMetaData.png
+23:40:32.741 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
+23:40:44.281 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
+23:40:44.830 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
