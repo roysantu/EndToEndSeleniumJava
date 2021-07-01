@@ -1,11 +1,17 @@
 package frameworkBase;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -21,6 +27,8 @@ public class FrameworkBase {
 	
 	public static WebDriver driver;
 	public Properties prop;
+	
+	private static Logger log = LogManager.getLogger(FrameworkBase.class.getName());
 	
 //	public static ExtentTest test;
 	
@@ -59,7 +67,7 @@ public class FrameworkBase {
 //		Reporter.log("Setting Done- Report", true);
 	}
 	
-	public void initializeDriver() {
+	public WebDriver initializeDriver() {
 		
 //		Reporter.log("Setting up- Browser", true);
 		
@@ -82,6 +90,8 @@ public class FrameworkBase {
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
+		return driver;
+		
 //		Reporter.log("Browser setup done- Application ready to run :)!!", true);
 		
 	}
@@ -94,13 +104,15 @@ public class FrameworkBase {
 //        Reporter.log("Report can be accessed via >>> "+reportPath,true);
 	}
 	
-//	public String getScreenshot(String testMethodName, WebDriver driver) throws IOException {
-//		TakesScreenshot ts = (TakesScreenshot) driver;
-//		File source = ts.getScreenshotAs(OutputType.FILE);
-//		String destinationFile = System.getProperty("user.dir") + "/reports/screenshots/" + testMethodName + ".png";
-//		FileUtils.copyFile(source, new File(destinationFile));
-//		
-//		return destinationFile;
-//	}
+	public String getScreenshot(String testMethodName, WebDriver driver) throws IOException {
+		TakesScreenshot ts = (TakesScreenshot)driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		String destinationFile = System.getProperty("user.dir") + "/reports/screenshots/" + testMethodName + ".png";
+		
+		FileUtils.copyFile(source, new File(destinationFile));
+
+		log.info(destinationFile);
+		return destinationFile;
+	}
 
 }

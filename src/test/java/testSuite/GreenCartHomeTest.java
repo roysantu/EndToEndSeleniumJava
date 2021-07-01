@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -29,13 +30,15 @@ public class GreenCartHomeTest extends FrameworkBase {
 	static ExtentTest test;
 	static ExtentReports report;
 	
+	public WebDriver driver;
+	
 
 	@BeforeClass
 	public void startTest() {
 		System.out.println("Starting test class");
 		log.info("Starting test class");
 		
-		ExtentSparkReporter extent=new ExtentSparkReporter(System.getProperty("user.dir") + "/Reports/index.html");
+		ExtentSparkReporter extent=new ExtentSparkReporter(System.getProperty("user.dir") + "/reports/index.html");
 		
 		report = new ExtentReports();
 		report.attachReporter(extent);
@@ -63,7 +66,7 @@ public class GreenCartHomeTest extends FrameworkBase {
 	public void testCaseSetup() {
 		test = report.createTest("Test Case Setup");
 		
-		initializeDriver();
+		driver = initializeDriver();
 
 		greenCartHomePage = new GreenCartHomePage();
 		driver.get(prop.getProperty("greenCartURL"));
@@ -72,7 +75,7 @@ public class GreenCartHomeTest extends FrameworkBase {
 
 	@AfterMethod
 	public void testMethodEnd() throws InterruptedException {
-//		Thread.sleep(3000);
+
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		// TODO Take Screenshot
 		driver.close();
@@ -89,7 +92,7 @@ public class GreenCartHomeTest extends FrameworkBase {
 		test = report.createTest("Test site Meta Data");
 		String pageTitle = driver.getTitle();
 		System.out.println(pageTitle);
-		Assert.assertEquals(pageTitle, "GreenKart - veg and fruits kart");
+		Assert.assertEquals(pageTitle, "GreenKart - veg and fruits kart1");
 		log.info("Meta data is validated");
 
 		test.log(Status.PASS, "Some good status");
