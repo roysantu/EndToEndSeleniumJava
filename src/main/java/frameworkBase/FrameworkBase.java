@@ -28,7 +28,7 @@ public class FrameworkBase {
 	public static WebDriver driver;
 	public Properties prop;
 	
-	private static Logger log = LogManager.getLogger(FrameworkBase.class.getName());
+	private Logger log;
 	
 //	public static ExtentTest test;
 	
@@ -42,6 +42,7 @@ public class FrameworkBase {
 	public FrameworkBase() {
 		
 //		Reporter.log("Setting up- properties", true);
+//		log = LogManager.getLogger(FrameworkBase.class.getName());
 		
 		try {
 			prop = new Properties();

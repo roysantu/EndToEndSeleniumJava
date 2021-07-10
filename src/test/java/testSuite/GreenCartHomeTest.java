@@ -21,16 +21,19 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import static org.testng.Assert.assertTrue;
 
 import frameworkBase.FrameworkBase;
+import frameworkBase.Operations;
 import pageObjects.GreenCartHomePage;
 
 public class GreenCartHomeTest extends FrameworkBase {
 	GreenCartHomePage greenCartHomePage;
 	private static Logger log = LogManager.getLogger(GreenCartHomeTest.class.getName());
-	
+//	public Logger log;
 	static ExtentTest test;
 	static ExtentReports report;
 	
 	public WebDriver driver;
+	
+	public Operations ops;
 	
 
 	@BeforeClass
@@ -51,6 +54,7 @@ public class GreenCartHomeTest extends FrameworkBase {
 
 	public GreenCartHomeTest() {
 		super();
+		ops = new Operations(driver, log);
 	}
 
 	@BeforeTest
@@ -81,10 +85,11 @@ public class GreenCartHomeTest extends FrameworkBase {
 	@Test(enabled = true)
 	public void testMetaData() {
 		
-		String pageTitle = driver.getTitle();
-		System.out.println(pageTitle);
-		Assert.assertEquals(pageTitle, "GreenKart - veg and fruits kart1");
-		log.info("Meta data is validated");
+//		String pageTitle = driver.getTitle();
+//		System.out.println(pageTitle);
+//		Assert.assertEquals(pageTitle, "GreenKart - veg and fruits kart1");
+//		log.info("Meta data is validated");
+		ops.verifyPageTitle(driver, log, "GreenKart - veg and fruits kart");
 		
 	}
 	
