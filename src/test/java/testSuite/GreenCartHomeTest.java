@@ -27,7 +27,7 @@ import pageObjects.GreenCartHomePage;
 public class GreenCartHomeTest extends FrameworkBase {
 	GreenCartHomePage greenCartHomePage;
 	private static Logger log = LogManager.getLogger(GreenCartHomeTest.class.getName());
-//	public Logger log;
+
 	static ExtentTest test;
 	static ExtentReports report;
 	
@@ -54,7 +54,6 @@ public class GreenCartHomeTest extends FrameworkBase {
 
 	public GreenCartHomeTest() {
 		super();
-		ops = new Operations(driver, log);
 	}
 
 	@BeforeTest
@@ -66,8 +65,9 @@ public class GreenCartHomeTest extends FrameworkBase {
 	public void testCaseSetup() {
 		
 		driver = initializeDriver();
+		ops = new Operations(driver, log);
 
-		greenCartHomePage = new GreenCartHomePage();
+		greenCartHomePage = new GreenCartHomePage(log);
 		driver.get(prop.getProperty("greenCartURL"));
 		log.info("Driver is Closed");
 	}
@@ -84,21 +84,14 @@ public class GreenCartHomeTest extends FrameworkBase {
 
 	@Test(enabled = true)
 	public void testMetaData() {
-		
-//		String pageTitle = driver.getTitle();
-//		System.out.println(pageTitle);
-//		Assert.assertEquals(pageTitle, "GreenKart - veg and fruits kart1");
-//		log.info("Meta data is validated");
-		ops.verifyPageTitle(driver, log, "GreenKart - veg and fruits kart");
-		
+		ops.verifyPageTitle("GreenKart - veg and fruits kart1");
 	}
 	
 	@Test(enabled = true)
 	public void verifyPageLogo() {
-		
-		System.out.println("Second test");
-		System.out.println(greenCartHomePage.verifyLogoText());
-		Assert.assertEquals(greenCartHomePage.verifyLogoExists(), true);
+
+		greenCartHomePage.verifyLogoText();
+//		Assert.assertEquals(greenCartHomePage.verifyLogoExists(), true);
 		
 	}
 

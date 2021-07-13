@@ -1,3 +1,2 @@
-00:50:02.922 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
-00:50:15.303 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
-00:50:15.761 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed
+01:53:55.230 [main] INFO  testSuite.GreenCartHomeTest - InnerText matched: Expected : GREENKART; Actual : GREENKART
+01:53:56.484 [main] INFO  testSuite.GreenCartHomeTest - Driver is Closed

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -28,21 +30,7 @@ public class FrameworkBase {
 	public static WebDriver driver;
 	public Properties prop;
 	
-	private Logger log;
-	
-//	public static ExtentTest test;
-	
-//	public static ExtentReports report;
-//	public ExtentTest logger;
-//	public static String reportPath;
-	
-//	public Reporter Reporter;
-	
-
 	public FrameworkBase() {
-		
-//		Reporter.log("Setting up- properties", true);
-//		log = LogManager.getLogger(FrameworkBase.class.getName());
 		
 		try {
 			prop = new Properties();
@@ -54,23 +42,9 @@ public class FrameworkBase {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-//		report = new ExtentReports();
-//		Reporter.log("Setting Done- Properties", true);
-//		
-//		Reporter.log("Setting up- Reports", true);
-//		
-//		reportPath = prop.getProperty("extentReportPath");
-//		ExtentSparkReporter spark = new ExtentSparkReporter(prop.getProperty("extentReportPath"));
-//		report=new ExtentReports();
-//		report.attachReporter(spark);
-//		
-//		Reporter.log("Setting Done- Report", true);
 	}
 	
 	public WebDriver initializeDriver() {
-		
-//		Reporter.log("Setting up- Browser", true);
 		
 		String browserName = prop.getProperty("browserName");
 		
@@ -93,26 +67,18 @@ public class FrameworkBase {
 		
 		return driver;
 		
-//		Reporter.log("Browser setup done- Application ready to run :)!!", true);
-		
 	}
 	
-	public void reportTearDown() {
-//		report.flush();
-//
-//        Reporter.log("Test Completed >>> Reports Generated", true);
-//
-//        Reporter.log("Report can be accessed via >>> "+reportPath,true);
-	}
 	
 	public String getScreenshot(String testMethodName, WebDriver driver) throws IOException {
 		TakesScreenshot ts = (TakesScreenshot)driver;
 		File source = ts.getScreenshotAs(OutputType.FILE);
-		String destinationFile = System.getProperty("user.dir") + "/reports/screenshots/" + testMethodName + ".png";
+		String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		String destinationFile = System.getProperty("user.dir") + "/reports/screenshots/" + testMethodName + "_"+ timeStamp + ".png";
 		
 		FileUtils.copyFile(source, new File(destinationFile));
 
-		log.info(destinationFile);
+//		log.info(destinationFile); // TODO fix log bug
 		return destinationFile;
 	}
 
