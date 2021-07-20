@@ -10,11 +10,18 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import static org.testng.Assert.assertTrue;
 
 import frameworkBase.FrameworkBase;
+import frameworkBase.Operations;
 
 public class GreenCartHomePage extends FrameworkBase {
+	
+	public Operations ops;
+	
 	// Elements
 	// Header Elements
 	@FindBy(xpath = ".//div/header")
@@ -65,8 +72,9 @@ public class GreenCartHomePage extends FrameworkBase {
 	
 	
 	// Constructor
-	public GreenCartHomePage() {
+	public GreenCartHomePage(Logger log) {
 		PageFactory.initElements(driver, this);
+		ops = new Operations(driver, log);
 	}
 	
 	// Methods for Header section
@@ -74,12 +82,8 @@ public class GreenCartHomePage extends FrameworkBase {
 		return pageNameLogo.isDisplayed();
 	}
 	
-	public boolean verifyLogoText() { 
-		if(pageNameLogo.getText().equals("GREENKART")) {
-			return true;
-		} else {
-			return false;
-		}
+	public void verifyLogoText(String elemText) { 
+		ops.verifyObjectText(pageNameLogo, elemText);
 	}
 
 	public ArrayList<String> verifyHeaderSectionStyle() {
