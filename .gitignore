@@ -1,5 +1,5 @@
 test-output/
-*/target/*
+target
 reports/screenshots
 logs
 .DS_Store
