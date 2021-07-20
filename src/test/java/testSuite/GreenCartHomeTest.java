@@ -25,13 +25,13 @@ import frameworkBase.Operations;
 import pageObjects.GreenCartHomePage;
 
 public class GreenCartHomeTest extends FrameworkBase {
+	public WebDriver driver;
 	GreenCartHomePage greenCartHomePage;
-	private static Logger log = LogManager.getLogger(GreenCartHomeTest.class.getName());
+	
+	public Logger log = LogManager.getLogger(GreenCartHomeTest.class.getName());
 
 	static ExtentTest test;
 	static ExtentReports report;
-	
-	public WebDriver driver;
 	
 	public Operations ops;
 	
@@ -40,16 +40,12 @@ public class GreenCartHomeTest extends FrameworkBase {
 	public void startTest() {
 		System.out.println("Starting test class");
 		log.info("Starting test class");
-		
-		
 	}
 	
 	@AfterClass
 	public void endTest()
 	{
 		System.out.println("Ending test class");
-		
-		
 	}
 
 	public GreenCartHomeTest() {
@@ -63,23 +59,20 @@ public class GreenCartHomeTest extends FrameworkBase {
 
 	@BeforeMethod
 	public void testCaseSetup() {
-		
 		driver = initializeDriver();
 		ops = new Operations(driver, log);
 
 		greenCartHomePage = new GreenCartHomePage(log);
-		driver.get(prop.getProperty("greenCartURL"));
-		log.info("Driver is Closed");
+//		driver.get(prop.getProperty("greenCartURL"));
+		ops.openUrl(prop.getProperty("greenCartURL"), prop.getProperty("greenCartURLRedirect"));
 	}
 
 	@AfterMethod
 	public void testMethodEnd() throws InterruptedException {
-
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.close();
 		driver.quit();
 		log.info("Driver is Closed");
-		
 	}
 
 	@Test(enabled = true)
@@ -89,10 +82,7 @@ public class GreenCartHomeTest extends FrameworkBase {
 	
 	@Test(enabled = true)
 	public void verifyPageLogo() {
-
-		greenCartHomePage.verifyLogoText();
-//		Assert.assertEquals(greenCartHomePage.verifyLogoExists(), true);
-		
+		greenCartHomePage.verifyLogoText("GREENKART1");
 	}
 
 }

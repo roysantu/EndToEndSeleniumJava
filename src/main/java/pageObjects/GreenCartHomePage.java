@@ -82,8 +82,8 @@ public class GreenCartHomePage extends FrameworkBase {
 		return pageNameLogo.isDisplayed();
 	}
 	
-	public void verifyLogoText() { 
-		ops.verifyObjectText(pageNameLogo, "GREENKART");
+	public void verifyLogoText(String elemText) { 
+		ops.verifyObjectText(pageNameLogo, elemText);
 	}
 
 	public ArrayList<String> verifyHeaderSectionStyle() {

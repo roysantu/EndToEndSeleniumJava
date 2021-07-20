@@ -6,7 +6,7 @@
 	</Properties>
 
 	<Appenders>
-		<RollingFile name="File" fileName="${basePath}/prints.log"
+		<RollingFile name="File"
 			filePattern="${basePath}/prints-%d{yyyy-MM-dd}.log">
 			<PatternLayout
 				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
@@ -18,7 +18,7 @@
 		</Console>
 	</Appenders>
 	<Loggers>
-		<Root level="trace">
+		<Root level="all">
 			<AppenderRef ref="File" />
 		</Root>
 	</Loggers>
