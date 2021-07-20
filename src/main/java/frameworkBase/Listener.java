@@ -55,7 +55,7 @@ public class Listener extends FrameworkBase implements ITestListener {
 			// Take Screenshots
 			extentTest.get().addScreenCaptureFromPath(getScreenshot(testMethodName, driver), testMethodName);
 			log.info(result.getTestName() + " - " + result.isSuccess());
-//			getScreenshot(testMethodName, driver);
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

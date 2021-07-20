@@ -77,12 +77,12 @@ public class GreenCartHomeTest extends FrameworkBase {
 
 	@Test(enabled = true)
 	public void testMetaData() {
-		ops.verifyPageTitle("GreenKart - veg and fruits kart1");
+		ops.verifyPageTitle("GreenKart - veg and fruits kart");
 	}
 	
 	@Test(enabled = true)
 	public void verifyPageLogo() {
-		greenCartHomePage.verifyLogoText("GREENKART1");
+		greenCartHomePage.verifyLogoText("GREENKART");
 	}
 
 }

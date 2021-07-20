@@ -7,6 +7,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -16,6 +17,8 @@ public class Operations {
 	public WebDriver driver;
 	public WebDriver driver1;
 	private String logMsg;
+	
+	WebDriverWait explicitWait = new WebDriverWait(driver, 30);
 
 	public Operations(WebDriver driver, Logger log) {
 		this.driver = driver;
@@ -25,8 +28,6 @@ public class Operations {
 	/**
 	   * Verify if page is loaded and used privately in ops class. If they are not,
 	   * an AssertionError, with the given message, is thrown.
-	   * @param url Application url as String
-	   * @param redirectUrl Application redirect url as String
 	   */
 	private void waitForPageLoaded() {
 		// Custom expected condition
@@ -38,8 +39,9 @@ public class Operations {
                 };
                 
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 30);
-            wait.until(expectation);
+        	Thread.sleep(3000); // TODO fix this wait
+            
+        	explicitWait.until(expectation);
         } catch (Throwable error) {
             Assert.fail("Timeout waiting for Page Load Request to complete.");
         }
@@ -109,9 +111,37 @@ public class Operations {
 		this.logMsg = "User expects object innerText to be : " + expectedText;
 		log.info(this.logMsg);
 
+		explicitWait.until(ExpectedConditions.invisibilityOf(elem));
+		Assert.assertTrue(elem.isDisplayed(), this.logMsg);
+		
 		String actualText = elem.getText();
 		Assert.assertEquals(actualText, expectedText, "InnerText match failed");
 		log.info("InnerText matched: Expected : " + expectedText + "; Actual : " + actualText);
+	}
+	
+	/**
+	 * Get innerText for a given element or Locator. If they are
+	 * not found, an AssertionError, with the given message, is thrown.
+	 * 
+	 * @param expectedText the expected Title as String
+	 * @param Locator xpath/CSS as String (Overload methods)
+	 */
+	public String getObjectText(WebElement elem) {
+		String actualText;
+		
+		this.logMsg = "User gets object innerText if object is displayed";
+		log.info(this.logMsg);
+		
+		this.logMsg = "Explicitly wait for element to be displayed for :" + "Seconds"; //TODO Set global wait for explicit wait from properties
+		log.info(this.logMsg);
+		
+		explicitWait.until(ExpectedConditions.invisibilityOf(elem));
+		Assert.assertTrue(elem.isDisplayed(), this.logMsg);
+		actualText = elem.getText();
+		
+		log.info("InnerText for elem is : " + actualText);
+		
+		return actualText;
 	}
 
 	/**
@@ -124,6 +154,6 @@ public class Operations {
 	public void getElementByXpath(String xPath) {
 		this.logMsg = "User expects object to be present with Xpath: " + xPath;
 		log.info(this.logMsg);
-
+		//TODO
 	}
 }

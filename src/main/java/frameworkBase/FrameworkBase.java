@@ -77,8 +77,6 @@ public class FrameworkBase {
 		String destinationFile = System.getProperty("user.dir") + "/reports/screenshots/" + testMethodName + "_"+ timeStamp + ".png";
 		
 		FileUtils.copyFile(source, new File(destinationFile));
-
-//		log.info(destinationFile); // TODO fix log bug
 		return destinationFile;
 	}
 
