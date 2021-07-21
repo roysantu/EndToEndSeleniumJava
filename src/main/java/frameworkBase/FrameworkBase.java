@@ -16,6 +16,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Reporter;
@@ -23,6 +24,8 @@ import org.testng.Reporter;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 
 public class FrameworkBase {
@@ -49,11 +52,28 @@ public class FrameworkBase {
 		String browserName = prop.getProperty("browserName");
 		
 		if(browserName.equals("chrome")) {
-			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + prop.getProperty("chromeDriverPath"));
-			driver = new ChromeDriver();
+//			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + prop.getProperty("chromeDriverPath"));
+			
+			// From Maven
+			WebDriverManager.chromedriver().version(prop.getProperty("chromeDriverVersion")).setup();
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("start-maximized"); 
+			options.addArguments("enable-automation"); 
+			options.addArguments("--no-sandbox"); 
+			options.addArguments("--disable-infobars");
+			options.addArguments("--disable-dev-shm-usage");
+			options.addArguments("--disable-browser-side-navigation"); 
+			options.addArguments("--disable-gpu"); 
+			driver = new ChromeDriver(options); 
+			
+//			driver = new ChromeDriver();
 			
 		} else if(browserName.equals("firefox")) {
-			System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + prop.getProperty("geckoDriverPath"));
+//			System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + prop.getProperty("geckoDriverPath"));
+			// From Maven
+			WebDriverManager.firefoxdriver().version(prop.getProperty("FirefoxDriverVersion")).setup();
+//			FirefoxOptions options = new FirefoxOptions() //TODO implement options for firefox driver
+			
 			driver = new FirefoxDriver();
 			
 		} else if(browserName.equals("safari")) {
