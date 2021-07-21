@@ -49,15 +49,15 @@ public class FrameworkBase {
 		String browserName = prop.getProperty("browserName");
 		
 		if(browserName.equals("chrome")) {
-			System.setProperty("webdriver.chrome.driver", prop.getProperty("chromeDriverPath"));
+			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + prop.getProperty("chromeDriverPath"));
 			driver = new ChromeDriver();
 			
 		} else if(browserName.equals("firefox")) {
-			System.setProperty("webdriver.gecko.driver", prop.getProperty("geckoDriverPath"));
+			System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + prop.getProperty("geckoDriverPath"));
 			driver = new FirefoxDriver();
 			
 		} else if(browserName.equals("safari")) {
-			System.setProperty("webdriver.chrome.driver", prop.getProperty("safariDriverPath"));
+			System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + prop.getProperty("safariDriverPath"));
 			driver = new SafariDriver();
 		}
 
