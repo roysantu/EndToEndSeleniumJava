@@ -18,7 +18,7 @@ public class Operations {
 	public WebDriver driver1;
 	private String logMsg;
 	
-	WebDriverWait explicitWait = new WebDriverWait(driver, 30);
+//	public WebDriverWait explicitWait = new WebDriverWait(driver, 30);
 
 	public Operations(WebDriver driver, Logger log) {
 		this.driver = driver;
@@ -41,7 +41,7 @@ public class Operations {
         try {
         	Thread.sleep(3000); // TODO fix this wait
             
-        	explicitWait.until(expectation);
+//        	explicitWait.until(expectation);
         } catch (Throwable error) {
             Assert.fail("Timeout waiting for Page Load Request to complete.");
         }
@@ -58,7 +58,7 @@ public class Operations {
 		log.info(this.logMsg);
 
 		driver.get(url);
-		this.waitForPageLoaded();
+//		this.waitForPageLoaded();
 		 
 		Assert.assertEquals(driver.getCurrentUrl(), url, "User successfully opened URL");
 		log.info("Opened: url : " + url);
@@ -69,7 +69,7 @@ public class Operations {
 		log.info(this.logMsg);
 
 		driver.get(url);
-		this.waitForPageLoaded();
+//		this.waitForPageLoaded();
 
 		this.logMsg = "User successfully opened " + url + " and navigated to " + redirectUrl;
 		Assert.assertEquals(driver.getCurrentUrl(), redirectUrl, this.logMsg);
@@ -111,7 +111,7 @@ public class Operations {
 		this.logMsg = "User expects object innerText to be : " + expectedText;
 		log.info(this.logMsg);
 
-		explicitWait.until(ExpectedConditions.invisibilityOf(elem));
+//		explicitWait.until(ExpectedConditions.invisibilityOf(elem));
 		Assert.assertTrue(elem.isDisplayed(), this.logMsg);
 		
 		String actualText = elem.getText();
@@ -135,7 +135,7 @@ public class Operations {
 		this.logMsg = "Explicitly wait for element to be displayed for :" + "Seconds"; //TODO Set global wait for explicit wait from properties
 		log.info(this.logMsg);
 		
-		explicitWait.until(ExpectedConditions.invisibilityOf(elem));
+//		explicitWait.until(ExpectedConditions.invisibilityOf(elem));
 		Assert.assertTrue(elem.isDisplayed(), this.logMsg);
 		actualText = elem.getText();
 		

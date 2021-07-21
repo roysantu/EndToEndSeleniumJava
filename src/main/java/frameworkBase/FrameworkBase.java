@@ -36,6 +36,7 @@ public class FrameworkBase {
 			prop = new Properties();
 			FileInputStream fis = new FileInputStream("/Users/santuroy/Documents/newWorkspace/EndToEndJavaSeleniumFramework/src/main/java/resources/data.properties");
 			prop.load(fis); // Read data from Property file
+			System.out.println("In framework base----------");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();	
