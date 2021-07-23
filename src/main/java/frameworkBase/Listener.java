@@ -35,6 +35,8 @@ public class Listener extends FrameworkBase implements ITestListener {
 
 		WebDriver driver = null;
 		Logger log = null;
+		String screenshotPaths = "";
+		
 
 		String testMethodName = result.getMethod().getMethodName();
 
@@ -46,6 +48,12 @@ public class Listener extends FrameworkBase implements ITestListener {
 					.get(result.getInstance());
 			log = (Logger) result.getTestClass().getRealClass().getDeclaredField("log").get(result.getInstance());
 
+			// for multiple screenshots
+			screenshotPaths = (String) result.getTestClass().getRealClass().getDeclaredField("screenshotPaths")
+					.get(result.getInstance());
+
+			//
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,6 +61,18 @@ public class Listener extends FrameworkBase implements ITestListener {
 
 		try {
 			// Take Screenshots
+			// for multiple screenshots
+//			if (screenshotPaths != null & !screenshotPaths.isEmpty()) {
+//				pathArray = screenshotPaths.split(";");
+//				System.out.println(screenshotPaths);
+//				System.out.println(pathArray[0]);
+//				System.out.println(pathArray.length);
+//				for (String eachPath : pathArray) {
+//					extentTest.get().addScreenCaptureFromPath(eachPath, testMethodName);
+//				}
+//			}
+			getOnDemandScreenshots(screenshotPaths, testMethodName);
+			
 			extentTest.get().addScreenCaptureFromPath(getScreenshot(testMethodName, driver), testMethodName);
 			log.info(result.getTestName() + " - " + result.isSuccess());
 
@@ -67,6 +87,7 @@ public class Listener extends FrameworkBase implements ITestListener {
 		// TODO Auto-generated method stub
 		WebDriver driver = null;
 		Logger log = null;
+		String screenshotPaths = "";
 
 		String testMethodName = result.getMethod().getMethodName();
 
@@ -78,15 +99,22 @@ public class Listener extends FrameworkBase implements ITestListener {
 					.get(result.getInstance());
 			log = (Logger) result.getTestClass().getRealClass().getDeclaredField("log").get(result.getInstance());
 
+			// for multiple screenshots
+						screenshotPaths = (String) result.getTestClass().getRealClass().getDeclaredField("screenshotPaths")
+								.get(result.getInstance());
+						
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// Take Screenshots
 		try {
+			
+			getOnDemandScreenshots(screenshotPaths, testMethodName);
+			
 			String screenshotPath = getScreenshot(testMethodName, driver);
 			extentTest.get().addScreenCaptureFromPath(screenshotPath, testMethodName);
-			
+
 			log.error(result.getThrowable());
 
 		} catch (IOException e) {
@@ -120,6 +148,20 @@ public class Listener extends FrameworkBase implements ITestListener {
 		extentTest.get().log(Status.INFO, "Finishing Test");
 		report.flush();
 
+	}
+	
+	public void getOnDemandScreenshots(String screenshotPaths, String testMethodName) {
+		String[] pathArray;
+		
+		if (screenshotPaths != null && !screenshotPaths.isEmpty()) {
+			pathArray = screenshotPaths.split(";");
+//			System.out.println(screenshotPaths);
+//			System.out.println(pathArray[0]);
+//			System.out.println(pathArray.length);
+			for (String eachPath : pathArray) {
+				extentTest.get().addScreenCaptureFromPath(eachPath, testMethodName);
+			}
+		}
 	}
 
 }

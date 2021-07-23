@@ -1,5 +1,6 @@
 package testSuite;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,24 +28,26 @@ import pageObjects.GreenCartHomePage;
 public class GreenCartHomeTest extends FrameworkBase {
 	public WebDriver driver;
 	GreenCartHomePage greenCartHomePage;
-	
+
 	public Logger log = LogManager.getLogger(GreenCartHomeTest.class.getName());
 
 	static ExtentTest test;
 	static ExtentReports report;
-	
+
 	public Operations ops;
-	
+
+	// for multiple screenshots
+	public String screenshotPaths = "";
+	//
 
 	@BeforeClass
 	public void startTest() {
 		System.out.println("Starting test class");
 		log.info("Starting test class");
 	}
-	
+
 	@AfterClass
-	public void endTest()
-	{
+	public void endTest() {
 		System.out.println("Ending test class");
 	}
 
@@ -63,8 +66,8 @@ public class GreenCartHomeTest extends FrameworkBase {
 		ops = new Operations(driver, log);
 
 		greenCartHomePage = new GreenCartHomePage(log);
-//		driver.get(prop.getProperty("greenCartURL"));
 		ops.openUrl(prop.getProperty("greenCartURL"), prop.getProperty("greenCartURLRedirect"));
+
 	}
 
 	@AfterMethod
@@ -73,16 +76,22 @@ public class GreenCartHomeTest extends FrameworkBase {
 		driver.close();
 		driver.quit();
 		log.info("Driver is Closed");
+
+		screenshotPaths = "";
 	}
 
 	@Test(enabled = true)
 	public void testMetaData() {
+		screenshotPaths = captureScreenshot(screenshotPaths, "MetaDataInitial");
 		ops.verifyPageTitle("GreenKart - veg and fruits kart");
+		screenshotPaths = captureScreenshot(screenshotPaths, "testMetaData1");
 	}
-	
+
 	@Test(enabled = true)
 	public void verifyPageLogo() {
+		screenshotPaths = captureScreenshot(screenshotPaths, "LogoInitial-");
 		greenCartHomePage.verifyLogoText("GREENKART");
+
 	}
 
 }
