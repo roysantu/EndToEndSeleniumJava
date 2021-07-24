@@ -82,16 +82,19 @@ public class GreenCartHomeTest extends FrameworkBase {
 
 	@Test(enabled = true)
 	public void testMetaData() {
-		screenshotPaths = captureScreenshot(screenshotPaths, "MetaDataInitial");
 		ops.verifyPageTitle("GreenKart - veg and fruits kart");
-		screenshotPaths = captureScreenshot(screenshotPaths, "testMetaData1");
 	}
 
 	@Test(enabled = true)
 	public void verifyPageLogo() {
-		screenshotPaths = captureScreenshot(screenshotPaths, "LogoInitial-");
 		greenCartHomePage.verifyLogoText("GREENKART");
-
+	}
+	
+	@Test(enabled = true)
+	public void verifyPageFooterIsDisplayed() {
+		screenshotPaths = captureScreenshot(screenshotPaths, "DefaultHomePage");
+		ops.jsScrollTo(greenCartHomePage.footerSection);
+		
 	}
 
 }

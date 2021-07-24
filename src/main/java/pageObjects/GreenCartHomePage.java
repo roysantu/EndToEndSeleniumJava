@@ -70,6 +70,9 @@ public class GreenCartHomePage extends FrameworkBase {
 	})
 	public List<WebElement> allProductImages;
 	
+	@FindBy(xpath = "//footer")
+	public WebElement footerSection;
+	
 	
 	// Constructor
 	public GreenCartHomePage(Logger log) {
@@ -83,6 +86,10 @@ public class GreenCartHomePage extends FrameworkBase {
 	}
 	
 	public void verifyLogoText(String elemText) { 
+		ops.verifyObjectText(pageNameLogo, elemText);
+	}
+	
+	public void scrollTo(String elemText) { 
 		ops.verifyObjectText(pageNameLogo, elemText);
 	}
 

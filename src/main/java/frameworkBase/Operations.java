@@ -14,16 +14,16 @@ import org.testng.Assert;
 
 public class Operations {
 	public Logger log;
-	public Logger log1;
 	public WebDriver driver;
-	public WebDriver driver1;
 	private String logMsg;
+	private WebDriverWait explicitWait;
 	
 //	public WebDriverWait explicitWait = new WebDriverWait(driver, 30);
 
 	public Operations(WebDriver driver, Logger log) {
 		this.driver = driver;
 		this.log = log;
+		this.explicitWait=new WebDriverWait(driver, 30);
 	}
 	
 	/**
@@ -47,6 +47,22 @@ public class Operations {
             Assert.fail("Timeout waiting for Page Load Request to complete.");
         }
     }
+	
+	/**
+	 * Assert if a given element is displayed. If they are
+	 * not found, an AssertionError, with the given message, is thrown.
+	 * 
+	 * @param WebElement the expected WebElement as String
+	 */
+	public void verifyElementDisplayed(WebElement elem) {		
+		this.logMsg = "Explicitly wait for element to be displayed for : 30 Seconds"; //TODO Set global wait for explicit wait from properties
+		log.info(this.logMsg);
+//		WebDriverWait explicitWait=new WebDriverWait(driver, 30);
+		explicitWait.until(ExpectedConditions.visibilityOf(elem));
+		
+		Assert.assertTrue(elem.isDisplayed(), "Element is not displayed");
+		log.info("Element is displayed");
+	}
 
 	/**
 	   * Open URL and asset correct URL is opened or redirected to expected url (using overload). If they are not,
@@ -59,9 +75,9 @@ public class Operations {
 		log.info(this.logMsg);
 
 		driver.get(url);
-//		this.waitForPageLoaded();
+		//TODO wait for page to load
 		 
-		Assert.assertEquals(driver.getCurrentUrl(), url, "User successfully opened URL");
+		Assert.assertTrue(driver.getCurrentUrl().contains(url), "Open URL didnt match with expected");
 		log.info("Opened: url : " + url);
 	}
 
@@ -75,16 +91,6 @@ public class Operations {
 		this.logMsg = "User successfully opened " + url + " and navigated to " + redirectUrl;
 		Assert.assertEquals(driver.getCurrentUrl(), redirectUrl, this.logMsg);
 		log.info(this.logMsg);
-	}
-
-	// TO be deleted, Use below method
-	public void verifyPageTitle(WebDriver driver, Logger log, String expectedTitle) {
-		this.logMsg = "User expects page title to be : " + expectedTitle;
-		log.info(this.logMsg);
-
-		String actualTitle = driver.getTitle();
-		Assert.assertEquals(actualTitle, expectedTitle, "Title match failed");
-		log.info("Title matched: Expected : " + expectedTitle + "; Actual : " + actualTitle);
 	}
 
 	/**
@@ -112,8 +118,7 @@ public class Operations {
 		this.logMsg = "User expects object innerText to be : " + expectedText;
 		log.info(this.logMsg);
 
-//		explicitWait.until(ExpectedConditions.invisibilityOf(elem));
-		Assert.assertTrue(elem.isDisplayed(), this.logMsg);
+		this.verifyElementDisplayed(elem);
 		
 		String actualText = elem.getText();
 		Assert.assertEquals(actualText, expectedText, "InnerText match failed");
@@ -156,6 +161,26 @@ public class Operations {
 		this.logMsg = "User expects object to be present with Xpath: " + xPath;
 		log.info(this.logMsg);
 		//TODO
+	}
+	
+	/**
+	 * Scrolls to elements using xpath. If element is not found, an Error is thrown.
+	 * Handles Elements not found and stale element Overload with wait time
+	 * 
+	 * @param xPath    the expected Title as String
+	 * @param waitTime Optional wait time, default to 3 seconds if not provided
+	 */
+	public void jsScrollTo(WebElement elem) {
+		this.logMsg = "User scrolls to element";
+		this.verifyElementDisplayed(elem);
+		
+//		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elem);
+		this.jsExecutor(elem, "arguments[0].scrollIntoView(true);");
+		log.info(this.logMsg);
+	}
+	
+	private void jsExecutor(WebElement elem, String jsScript) {
+		((JavascriptExecutor) driver).executeScript(jsScript, elem);
 	}
 	
 }
