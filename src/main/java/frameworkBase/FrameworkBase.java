@@ -31,6 +31,7 @@ public class FrameworkBase {
 
 	public static WebDriver driver;
 	public Properties prop;
+	public String executionContext="";
 
 	public FrameworkBase() {
 
@@ -86,7 +87,14 @@ public class FrameworkBase {
 	}
 
 	public String getScreenshot(String testMethodName, WebDriver driver) throws IOException {
-		TakesScreenshot ts = (TakesScreenshot) driver;
+		TakesScreenshot ts;
+		if(executionContext.equals("")) {
+			ts = (TakesScreenshot) driver;
+		} else {
+			// TODO Fix alert screenshot
+			ts = (TakesScreenshot) driver.switchTo().alert();
+		}
+		
 		File source = ts.getScreenshotAs(OutputType.FILE);
 		String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		String destinationFile = System.getProperty("user.dir") + "/reports/screenshots/" + testMethodName + "_"
@@ -98,6 +106,27 @@ public class FrameworkBase {
 
 	public String captureScreenshot(String screenshotPaths, String testMethodName) {
 
+		try {
+			if (screenshotPaths != null && !screenshotPaths.isEmpty()) {
+				screenshotPaths = screenshotPaths + ";" + getScreenshot(testMethodName, driver);
+			} else {
+				screenshotPaths = getScreenshot(testMethodName, driver);
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return screenshotPaths;
+	}
+	// TODO Fix alert screenshot
+	public String captureScreenshot(String screenshotPaths, String testMethodName, String mode) {
+
+		if (mode.equals("alert")) {
+			executionContext = mode;
+			driver.switchTo().alert();
+		}
 		try {
 			if (screenshotPaths != null && !screenshotPaths.isEmpty()) {
 				screenshotPaths = screenshotPaths + ";" + getScreenshot(testMethodName, driver);

@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -14,14 +15,16 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+
 import frameworkBase.FrameworkBase;
 import frameworkBase.Operations;
 import pageObjects.GreenCartHomePage;
+import pageObjects.PopUpHandle;
 
-public class GreenCartHomeTest extends FrameworkBase {
+public class PopUpHandleTest extends FrameworkBase {
 	public WebDriver driver;
-	GreenCartHomePage greenCartHomePage;
-
+	public PopUpHandle popupHandlePage;
+	
 	public Logger log = LogManager.getLogger(GreenCartHomeTest.class.getName());
 
 	static ExtentTest test;
@@ -41,10 +44,11 @@ public class GreenCartHomeTest extends FrameworkBase {
 
 	@AfterClass
 	public void endTest() {
+		driver.quit();
 		System.out.println("Ending test class");
 	}
 
-	public GreenCartHomeTest() {
+	public PopUpHandleTest() {
 		super();
 	}
 
@@ -58,9 +62,8 @@ public class GreenCartHomeTest extends FrameworkBase {
 		driver = initializeDriver();
 		ops = new Operations(driver, log);
 
-		greenCartHomePage = new GreenCartHomePage(log);
-		ops.openUrl(prop.getProperty("greenCartURL"), prop.getProperty("greenCartURLRedirect"));
-
+		popupHandlePage = new PopUpHandle(log);
+		ops.openUrl(prop.getProperty("PopUpPracticePage"));
 	}
 
 	@AfterMethod
@@ -74,20 +77,10 @@ public class GreenCartHomeTest extends FrameworkBase {
 	}
 
 	@Test(enabled = true)
-	public void testMetaData() {
-		ops.verifyPageTitle("GreenKart - veg and fruits kart");
-	}
-
-	@Test(enabled = true)
-	public void verifyPageLogo() {
-		greenCartHomePage.verifyLogoText("GREENKART");
-	}
-	
-	@Test(enabled = true)
-	public void verifyPageFooterIsDisplayed() {
-		screenshotPaths = captureScreenshot(screenshotPaths, "DefaultHomePage");
-		ops.jsScrollTo(greenCartHomePage.footerSection);
-		
+	public void verifyPopupAlertText() {
+		ops.clickElement(popupHandlePage.alertButton);
+		//TODO get popup alert screenshot
+		popupHandlePage.verifyPopupAlert();
 	}
 
 }

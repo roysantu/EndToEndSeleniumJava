@@ -10,10 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import static org.testng.Assert.assertTrue;
 
 import frameworkBase.FrameworkBase;
 import frameworkBase.Operations;
